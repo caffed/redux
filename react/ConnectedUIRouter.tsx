@@ -32,9 +32,9 @@ export function ConnectedUIRouter({
     router.current.plugin(reduxPlugin.current);
 
     if (config) config(router.current);
-    (states || []).forEach(state =>
-      router.current.stateRegistry.register(state)
-    );
+    (states || [])
+      .filter(state => !Boolean(router.current.stateRegistry.get(state.name)))
+      .forEach(state => router.current.stateRegistry.register(state));
 
     init.current = true;
   }
